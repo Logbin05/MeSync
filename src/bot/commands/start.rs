@@ -22,6 +22,10 @@ pub async fn start(bot: Bot, msg: Message) -> ResponseResult<()> {
             InlineKeyboardButton::callback("🛠️ Управление подпиской", "control_subscription"),
         ],
         vec![InlineKeyboardButton::url(
+            "✏️ Обратная связь",
+            "https://t.me/logbin05".parse().unwrap(),
+        )],
+        vec![InlineKeyboardButton::url(
             "📒 Канал разработчика",
             Url::parse("https://t.me/logbin05").unwrap(),
         )],

@@ -18,6 +18,10 @@ pub fn main_menu_keyboard() -> InlineKeyboardMarkup {
             InlineKeyboardButton::callback("🛠️ Упр.подпиской", "control_subscription"),
         ],
         vec![InlineKeyboardButton::url(
+            "✏️ Обратная связь",
+            "https://t.me/logbin05".parse().unwrap(),
+        )],
+        vec![InlineKeyboardButton::url(
             "📒 Канал разработчика",
             "https://t.me/logbin05".parse().unwrap(),
         )],
