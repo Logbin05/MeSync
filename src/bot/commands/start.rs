@@ -13,7 +13,7 @@ pub async fn start(bot: Bot, msg: Message) -> ResponseResult<()> {
         vec![
             InlineKeyboardButton::url(
                 "🔰 Поддержка",
-                "https://t.me/logbin05?direct".parse().unwrap(),
+                "https://t.me/logbin_ov?direct".parse().unwrap(),
             ),
             InlineKeyboardButton::callback("📒 Политика кодифицир", "policy"),
         ],
@@ -23,11 +23,11 @@ pub async fn start(bot: Bot, msg: Message) -> ResponseResult<()> {
         ],
         vec![InlineKeyboardButton::url(
             "✏️ Обратная связь",
-            "https://t.me/logbin05".parse().unwrap(),
+            "https://t.me/logbin_ov".parse().unwrap(),
         )],
         vec![InlineKeyboardButton::url(
             "📒 Канал разработчика",
-            Url::parse("https://t.me/logbin05").unwrap(),
+            Url::parse("https://t.me/logbin_ov").unwrap(),
         )],
     ]);
 

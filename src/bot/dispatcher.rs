@@ -1,5 +1,6 @@
-use super::callbacks;
 use super::commands::{self, Command};
+use crate::bot::callbacks;
+use crate::bot::callbacks::tasks::types::TaskStorage;
 use teloxide::{dispatching::Dispatcher, prelude::*, types::Update};
 
 async fn handler(bot: Bot, msg: Message, cmd: Command) -> ResponseResult<()> {
@@ -9,21 +10,25 @@ async fn handler(bot: Bot, msg: Message, cmd: Command) -> ResponseResult<()> {
     Ok(())
 }
 
-async fn callback_handler(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
-    callbacks::handle(bot, q).await
+async fn callback_handler(bot: Bot, q: CallbackQuery, storage: TaskStorage) -> ResponseResult<()> {
+    callbacks::handle(bot, q, storage).await
 }
 
-pub async fn run(bot: Bot) {
+pub async fn run(bot: Bot, storage: TaskStorage) {
     Dispatcher::builder(
-        bot.clone(),
+        bot,
         dptree::entry()
             .branch(
                 Update::filter_message()
-                    .filter_command::<Command>()
-                    .endpoint(handler),
+                    .filter_command::<crate::bot::commands::Command>()
+                    .endpoint(crate::bot::dispatcher::handler)
             )
-            .branch(Update::filter_callback_query().endpoint(callback_handler)),
+            .branch(
+                Update::filter_callback_query()
+                    .endpoint(crate::bot::dispatcher::callback_handler)
+            )
     )
+    .dependencies(dptree::deps![storage])
     .enable_ctrlc_handler()
     .build()
     .dispatch()

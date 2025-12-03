@@ -10,7 +10,7 @@ pub async fn handle(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
 
     let mut keyboard: Vec<Vec<InlineKeyboardButton>> = Vec::new();
     keyboard.push(vec![
-        InlineKeyboardButton::callback("➕ Задачи", "tasks"),
+        InlineKeyboardButton::callback("📒 Задачи", "tasks"),
         InlineKeyboardButton::callback("📕 Заметки", "notes"),
     ]);
     keyboard.push(vec![InlineKeyboardButton::callback("⬅️ Назад", "GoToBack")]);
