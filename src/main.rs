@@ -1,10 +1,14 @@
 mod bot;
 mod config;
 
+use std::{collections::HashMap, sync::{Arc, Mutex}};
+
 use log::*;
 use config::Config;
 use bot::dispatcher::run;
 use teloxide::prelude::*;
+
+use crate::bot::callbacks::tasks::types::TaskStorage;
 
 type TeloxideResult<T> = std::result::Result<T, teloxide::RequestError>;
 
@@ -15,8 +19,9 @@ async fn main() -> TeloxideResult<()> {
 
     let config = Config::from_env();
     let bot = Bot::new(config.token);
+    let storage: TaskStorage = Arc::new(Mutex::new(HashMap::new()));
 
-    run(bot).await;
+    run(bot, storage).await;
 
     Ok(())
 }

@@ -3,12 +3,14 @@ pub mod control_subscription;
 pub mod policy;
 pub mod settings;
 pub mod subscription;
+pub mod tasks;
 
 use crate::bot::main_menu::{main_menu_keyboard, main_menu_text};
+use crate::bot::callbacks::tasks::types::TaskStorage;
 use teloxide::prelude::*;
 use teloxide::types::{CallbackQuery, ParseMode};
 
-pub async fn handle(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
+pub async fn handle(bot: Bot, q: CallbackQuery, storage: TaskStorage) -> ResponseResult<()> {
     if let Some(data) = &q.data {
         if data.starts_with("subscribe_") {
             return crate::bot::callbacks::subscription::handle(bot, q).await;
@@ -21,6 +23,7 @@ pub async fn handle(bot: Bot, q: CallbackQuery) -> ResponseResult<()> {
         Some("policy") => policy::handle(bot, q).await?,
         Some("subscription") => subscription::handle(bot, q).await?,
         Some("control_subcription") => control_subscription::handle(bot, q).await?,
+        Some("tasks") => tasks::handle(bot, q, storage).await?,
         Some("GoToBack") => {
             if let Some(msg) = &q.message {
                 bot.edit_message_text(msg.chat().id, msg.id(), &main_menu_text(msg))
